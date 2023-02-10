@@ -22,8 +22,28 @@ jobs:
       - name: Run ls
         run: ls
       - name: cd out
-        run: cd out && ls
-      - uses: actions/upload-artifact@v3
+        run: cd out && mv *.iso os-release.iso
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: out/ # or path/to/artifact
+          name: os-release.iso
+          path: out/os-release.iso # or path/to/artifact
+
+  release:
+    needs: build
+    name: Release an ISO
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@master
+        with:
+          name: os-release.iso
+          path: out/os-release.iso
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: out/os-release.iso
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
