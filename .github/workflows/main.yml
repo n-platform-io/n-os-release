@@ -12,10 +12,4 @@ jobs:
           - name: Check out the repo
             uses: actions/checkout@v2
           - name: Run the build process with Docker
-            uses: addnab/docker-run-action@v3
-            with:
-                image: archlinux:latest
-                options: -v ${{ github.workspace }}:/tmp
-                run: |
-                    env
-                    ls
+            run: ls
