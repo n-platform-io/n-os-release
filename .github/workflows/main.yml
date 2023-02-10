@@ -15,3 +15,5 @@ jobs:
             run: pacman --noconfirm -Syyu archiso curl
           - name: Run the build process with Docker
             run: mkarchiso -v .
+          - name: Show full output
+            run: tree
