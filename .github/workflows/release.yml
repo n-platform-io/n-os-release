@@ -23,5 +23,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: N-Operating-System-${{ github.ref }}-amd64.iso
+          name: N-Operating-System-${{ github.ref_name }}-amd64.iso
           path: out/os-release.iso # or path/to/artifact
