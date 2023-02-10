@@ -1,3 +1,5 @@
+name: Basic Build
+
 on:
   pull_request:
 

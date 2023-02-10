@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Publish binaries
+    runs-on: ubuntu-latest
+
+    steps:
+      container:
+        image: archlinux:latest
+        options: --privileged
+      steps:
+        - name: Check out the repo
+          uses: actions/checkout@v2
+        - name: Install and update packages
+          run: pacman --noconfirm -Syyu archiso curl
+        - name: Run the build process with Docker
+          run: mkarchiso -v .
+        - name: Upload binaries to release
+          uses: svenstaro/upload-release-action@v2
+          with:
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
+            file: out/*.iso
+            asset_name: iso
+            tag: ${{ github.ref }}
+            overwrite: true
+            body: "This is my release text"
