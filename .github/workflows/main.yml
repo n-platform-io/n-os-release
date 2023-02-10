@@ -5,6 +5,9 @@ jobs:
     compile:
         name: Compile site assets
         runs-on: ubuntu-latest
+        container:
+          image: archlinux:latest
+          options: --privileged
         steps:
           - name: Check out the repo
             uses: actions/checkout@v2
@@ -12,6 +15,7 @@ jobs:
             uses: addnab/docker-run-action@v3
             with:
                 image: archlinux:latest
-                options: -v ${{ github.workspace }}:/opt
+                options: -v ${{ github.workspace }}:/tmp
                 run: |
                     env
+                    ls
