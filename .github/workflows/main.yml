@@ -11,5 +11,7 @@ jobs:
         steps:
           - name: Check out the repo
             uses: actions/checkout@v2
+          - name: Install and update packages
+            run: pacman -Syyu archiso curl
           - name: Run the build process with Docker
-            run: ls
+            run: mkarchiso -v .
