@@ -19,12 +19,11 @@ jobs:
         run: pacman --noconfirm -Syyu archiso curl
       - name: Run the build process with Docker
         run: mkarchiso -v .
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - name: Run ls
+        run: ls
+      - name: cd out
+        run: cd out && ls
+      - uses: actions/upload-artifact@v3
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: out/*.iso
-          asset_name: iso
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is my release text"
+          name: my-artifact
+          path: out/ # or path/to/artifact
