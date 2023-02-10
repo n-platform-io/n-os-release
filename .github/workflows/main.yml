@@ -1,0 +1,17 @@
+on:
+  pull_request:
+
+jobs:
+    compile:
+        name: Compile site assets
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out the repo
+            uses: actions/checkout@v2
+          - name: Run the build process with Docker
+            uses: addnab/docker-run-action@v3
+            with:
+                image: archlinux:latest
+                options: -v ${{ github.workspace }}:/opt
+                run: |
+                    env
