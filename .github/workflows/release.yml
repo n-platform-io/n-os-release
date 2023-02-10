@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  release:
+    published:
+
+jobs:
+  build:
+    name: Publish binaries
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Install and update packages
+        run: pacman --noconfirm -Syyu archiso curl
+      - name: Run the build process with Docker
+        run: mkarchiso -v .
+      - name: Change the name
+        run: cd out && mv *.iso os-release.iso
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: N-Operating-System-${{ github.ref }}-amd64.iso
+          path: out/os-release.iso # or path/to/artifact

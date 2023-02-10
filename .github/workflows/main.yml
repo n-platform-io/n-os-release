@@ -1,17 +1,19 @@
+name: Basic Build
+
 on:
   pull_request:
 
 jobs:
     compile:
-        name: Compile site assets
+        name: Build N Operating system from current release
         runs-on: ubuntu-latest
+        container:
+          image: archlinux:latest
+          options: --privileged
         steps:
           - name: Check out the repo
             uses: actions/checkout@v2
+          - name: Install and update packages
+            run: pacman --noconfirm -Syyu archiso curl
           - name: Run the build process with Docker
-            uses: addnab/docker-run-action@v3
-            with:
-                image: archlinux:latest
-                options: -v ${{ github.workspace }}:/opt
-                run: |
-                    env
+            run: mkarchiso -v .
