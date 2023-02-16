@@ -12,6 +12,8 @@ jobs:
       image: archlinux:latest
       options: --privileged
     steps:
+      - name: Check connectivity
+        run: pacman -Syyu
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Install and update packages
