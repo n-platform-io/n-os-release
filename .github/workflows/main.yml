@@ -6,7 +6,7 @@ on:
 jobs:
     compile:
         name: Build N Operating system from current release
-        runs-on: [self-hosted, linux]
+        runs-on: self-hosted
         container:
           image: archlinux:latest
           options: --privileged
