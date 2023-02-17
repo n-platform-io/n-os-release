@@ -13,10 +13,6 @@ jobs:
       image: archlinux:latest
       options: --privileged
     steps:
-      - name: Check connectivity
-        run: cat /etc/resolv.conf
-      - name: Inject DNS
-        run: echo "nameserver 1.1.1.1" >> /etc/resolv.conf
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Install and update packages
